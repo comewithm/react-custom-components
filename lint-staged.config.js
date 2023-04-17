@@ -1,13 +1,13 @@
 module.exports = {
-    "{src}/**/!(*.min).js": [
+    "src/**/!(*.min).js": [
         "eslint --fix",
         "prettier --write"
     ],
-    "{src}/**/*.{ts,tsx}": [
+    "src/**/*.{ts,tsx}": [
         "eslint --fix",
         "prettier --write"
     ],
-    "{src}/**/*.{css,less}": [
+    "src/**/*.{css,less}": [
         "prettier --write"
     ]
 }

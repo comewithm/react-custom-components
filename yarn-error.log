@@ -1,0 +1,77 @@
+Arguments: 
+  D:\Program Files\nodejs\node.exe D:\Program Files\nodejs\node_global\node_modules\yarn\bin\yarn.js add -D html-webpack-plugin@next
+
+PATH: 
+  D:\Program Files\nodejs\node_global\node_modules;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Java\jdk1.8.0_181\bin;C:\Program Files\Java\jdk1.8.0_181\jre\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;D:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Server 8.0\bin;D:\Program Files\python2.7;E:\node\nvm;E:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Program Files\nodejs\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Wanghuan\AppData\Local\Microsoft\WindowsApps;D:\Program Files\Microsoft VS Code\bin;D:\Program Files\JetBrains\PyCharm Community Edition 2020.1.1\bin;;E:\node\nvm;E:\Program Files\nodejs;D:\Program Files\nodejs\node_global;D:\Program Files\yarn\global\node_modules\.bin\bin;
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.19.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'D:\Program Files\nodejs\node_global\yarn_cache\v6\npm-globals-13.20.0-ea276a1e508ffd4f1612888f9d1bad1e2717bf82-integrity\node_modules\globals\globals.json' -> 'D:\FRONT_END\evilTraining\react-custom-components\node_modules\@eslint\eslintrc\node_modules\globals\globals.json'
+
+npm manifest: 
+  {
+    "name": "react-custom-components",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "prepare": "husky install",
+      "lint": "lint-staged --allow-empty",
+      "build": "tsc -p tsconfig.build.json",
+      "dev": "webpack serve -c webpack.dev.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "@babel/core": "^7.21.4",
+      "@babel/preset-env": "^7.21.4",
+      "@babel/preset-react": "^7.18.6",
+      "@babel/preset-typescript": "^7.21.4",
+      "@commitlint/cli": "^17.6.1",
+      "@commitlint/config-conventional": "^17.6.1",
+      "@types/node": "^18.15.11",
+      "@types/react": "^18.0.33",
+      "@types/react-dom": "^18.0.11",
+      "@typescript-eslint/parser": "^5.58.0",
+      "babel-eslint": "^10.1.0",
+      "babel-loader": "^9.1.2",
+      "core-js": "^3.30.1",
+      "css-loader": "^6.7.3",
+      "eslint": "^8.38.0",
+      "eslint-config-prettier": "^8.8.0",
+      "eslint-plugin-import": "^2.27.5",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-prettier": "^4.2.1",
+      "html-webpack-plugin": "^5.5.0",
+      "husky": "^8.0.3",
+      "lint-staged": "^13.2.1",
+      "prettier": "^2.8.7",
+      "prettier-eslint-cli": "^7.1.0",
+      "style-loader": "^3.3.2",
+      "ts-node": "^10.9.1",
+      "typescript": "^5.0.4",
+      "webpack": "^5.75.0",
+      "webpack-cli": "^5.0.1",
+      "webpack-dev-server": "^4.11.1",
+      "webpack-merge": "^5.8.0"
+    },
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

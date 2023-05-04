@@ -1,12 +1,16 @@
 import React from 'react';
+import Trigger from '../Trigger/trigger';
 
-interface ITooltipProps {
-  message?: string;
+import './tooltip.less';
+
+interface ITTooltipProps {
+  children: React.ReactElement;
 }
 
-const Tooltip: React.FC<ITooltipProps> = (props) => {
-  const { message } = props;
-  return <div>Tooltip: {message}</div>;
+const Tooltip: React.FC<ITTooltipProps> = (props) => {
+  const { children } = props;
+
+  return <Trigger>{children}</Trigger>;
 };
 
 export default Tooltip;

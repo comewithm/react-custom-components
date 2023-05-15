@@ -1,43 +1,56 @@
-import React from 'react';
-import classnames from 'classnames';
-import './popup.less';
+import React, { forwardRef, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { PopupProps } from '../../../interface/trigger';
 
-interface IPopupProps {
-  className?: string;
-  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
-  onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
-  visible: boolean;
-  title?: string;
-}
+import './Popup.less';
 
-const prefixClass = `popup`;
+const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
+  const {
+    title,
+    open,
+    children,
+    onPopupEnter,
+    onPopupLeave,
+    setTriggerRef,
+    setPopupRef
+  } = props;
 
-const Popup: React.FC<IPopupProps> = (props) => {
-  const { className, title, visible, onMouseEnter, onMouseLeave } = props;
+  const titleContent = typeof title === 'function' ? title() : title;
 
-  const popupClass = classnames(prefixClass, className, {
-    [`popup-open`]: visible
-  });
+  const elementRef = useRef<any>();
+  const popupRef = useRef<any>();
 
-  if (!visible) {
-    return null;
-  }
+  useEffect(() => {
+    if (elementRef.current) {
+      setTriggerRef(elementRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (popupRef.current) {
+      setPopupRef(popupRef.current);
+    }
+  }, [open]);
 
   return (
     <>
-      <div
-        className={popupClass}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
-        <span className={`${prefixClass}-text`}>{title}</span>
+      <div ref={elementRef}>
+        {children}
+        {open
+          ? createPortal(
+              <div
+                ref={popupRef}
+                onMouseEnter={onPopupEnter}
+                onMouseLeave={onPopupLeave}
+              >
+                {titleContent}
+              </div>,
+              document.body
+            )
+          : null}
       </div>
     </>
   );
-};
-
-Popup.defaultProps = {
-  title: 'prompt text'
-};
+});
 
 export default Popup;

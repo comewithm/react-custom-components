@@ -39,7 +39,9 @@ module.exports = {
         // 禁止出现重复的case标签
         "no-duplicate-case": 2,
         // 禁用 console
-        "no-console": 1,
+        "no-console": 0,
+        // "no-unused-vars": ['off', {"args": "none", "vars": "local"}],
+        "no-unused-vars": 0,
         // 'no-console': process.env.NODE_ENV === 'production' ? 'error': 'off'
         // ...
     }

@@ -1,16 +1,26 @@
 import { createRoot } from 'react-dom/client';
-import { Tooltip } from './components';
+import { Trigger } from './components';
 
 import './style/variable.less';
 
 import './index.less';
 
 const App = () => {
+  const visibleChange = () => {};
+
+  const onButtonClick = () => {
+    console.log('button clicked');
+  };
+
   return (
     <>
       <div className="app-container">
-        <Tooltip title="hello world!!!">Tooltip children</Tooltip>
-        <Tooltip title="hello world!!!">Tooltip children</Tooltip>
+        <Trigger title="hello world!!!" onOpenChange={visibleChange}>
+          <button onClick={onButtonClick}>TRIGGER BUTTON</button>
+        </Trigger>
+        <Trigger title={'OTHER'}>
+          <button>ANOTHER TRIGGER</button>
+        </Trigger>
       </div>
     </>
   );

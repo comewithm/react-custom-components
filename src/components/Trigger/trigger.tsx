@@ -6,6 +6,7 @@ import Popup from './Popup/Popup';
 import './Trigger.less';
 import { useRefCallback } from '../../hooks/useRefCallback';
 import { useTriggerHover } from '../../hooks/useTriggerHover';
+import { circulatePopupPosition } from '../../utils/circulatePosition';
 
 // const prefixClass = `trigger`;
 
@@ -38,8 +39,6 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
   // merged popup visible
   const mergedVisible = open ? open : popupVisible;
 
-  // trigger ref to find the target element
-  const triggerRef = useRef<HTMLElement>(null);
   const [triggerTarget, setTriggerTarget] = useState<HTMLElement>();
   // get the trigger target element
   const setTriggerRef = useRefCallback((node: HTMLElement) => {
@@ -71,6 +70,9 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
     setPopupVisible(open || false);
   }, [open]);
 
+  // circulate popup position
+  const offsetInfo = circulatePopupPosition(triggerTarget, popupEle, mousePos);
+
   // ***********children props***************
   // console.log("children:", children);
   // {children: 'trigger button', onClick: ƒ}
@@ -89,7 +91,9 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
       event: React.MouseEvent,
       ...args: any[]
     ) {
+      console.log('mouse move trigger');
       mergedVisibleChange(true);
+      setMousePos([event.clientX, event.clientY]);
       // if exist
       childOriginalProps['onMouseEnter']?.(event, ...args);
     };
@@ -100,7 +104,7 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
         event: React.MouseEvent,
         ...args: any[]
       ) {
-        childOriginalProps['onMouseEnter']?.(event, ...args);
+        childOriginalProps['onMouseMove']?.(event, ...args);
         setMousePos([event.clientX, event.clientY]);
       };
     }
@@ -146,6 +150,7 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
       setTriggerRef={setTriggerRef}
       setPopupRef={setPopupRef}
       getPopupContainer={getPopupContainer}
+      offsetInfo={offsetInfo}
     />
   );
 };

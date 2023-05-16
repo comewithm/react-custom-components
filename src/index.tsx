@@ -18,9 +18,9 @@ const App = () => {
         <Trigger title="hello world!!!" onOpenChange={visibleChange}>
           <button onClick={onButtonClick}>TRIGGER BUTTON</button>
         </Trigger>
-        <Trigger title={'OTHER'}>
+        {/* <Trigger title={'OTHER'}>
           <button>ANOTHER TRIGGER</button>
-        </Trigger>
+        </Trigger> */}
       </div>
     </>
   );

@@ -23,4 +23,5 @@ export interface PopupProps {
   setTriggerRef: (node: HTMLElement) => void;
   setPopupRef: (node: HTMLDivElement) => void;
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  offsetInfo: number[];
 }

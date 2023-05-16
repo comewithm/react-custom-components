@@ -12,7 +12,8 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
     onPopupEnter,
     onPopupLeave,
     setTriggerRef,
-    setPopupRef
+    setPopupRef,
+    offsetInfo
   } = props;
 
   const titleContent = typeof title === 'function' ? title() : title;
@@ -32,6 +33,8 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
     }
   }, [open]);
 
+  const [offsetX, offsetY] = offsetInfo;
+
   return (
     <>
       <div ref={elementRef}>
@@ -42,6 +45,11 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
                 ref={popupRef}
                 onMouseEnter={onPopupEnter}
                 onMouseLeave={onPopupLeave}
+                style={{
+                  position: 'absolute',
+                  left: offsetX,
+                  top: offsetY
+                }}
               >
                 {titleContent}
               </div>,

@@ -15,7 +15,12 @@ const App = () => {
   return (
     <>
       <div className="app-container">
-        <Trigger title="hello world!!!" onOpenChange={visibleChange}>
+        <Trigger
+          title="hello world!!!hello world!!!hello world!!!hello world!!!"
+          color="#108ee9"
+          placement={'bottom'}
+          onOpenChange={visibleChange}
+        >
           <button onClick={onButtonClick}>TRIGGER BUTTON</button>
         </Trigger>
         {/* <Trigger title={'OTHER'}>

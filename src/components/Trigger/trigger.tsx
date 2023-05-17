@@ -32,6 +32,8 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
     getPopupContainer = () => document.body,
     onOpenChange,
     mouseInComponent,
+    color,
+    placement,
     children
   } = props;
 
@@ -71,7 +73,12 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
   }, [open]);
 
   // circulate popup position
-  const offsetInfo = circulatePopupPosition(triggerTarget, popupEle, mousePos);
+  const offsetInfo = circulatePopupPosition(
+    triggerTarget,
+    popupEle,
+    mousePos,
+    placement
+  );
 
   // ***********children props***************
   // console.log("children:", children);
@@ -83,28 +90,24 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
   const [showHoverList, hideHoverList] = useTriggerHover(trigger);
   const hoverShow = showHoverList.has('hover');
   const hoverHide = hideHoverList.has('hover');
+  const clickShow = showHoverList.has('click');
+  const clickHide = hideHoverList.has('click');
+
   if (hoverShow) {
     // handle popup mouseenter event
     console.log('hover show');
     // children add mouseenter event
-    childNewProps.onMouseEnter = function (
-      event: React.MouseEvent,
-      ...args: any[]
-    ) {
-      console.log('mouse move trigger');
+    childNewProps.onMouseEnter = function (event: React.MouseEvent) {
       mergedVisibleChange(true);
       setMousePos([event.clientX, event.clientY]);
       // if exist
-      childOriginalProps['onMouseEnter']?.(event, ...args);
+      childOriginalProps['onMouseEnter']?.(event);
     };
 
     // judgement for mousemove
     if (mouseInComponent) {
-      childNewProps.onMouseMove = function (
-        event: React.MouseEvent,
-        ...args: any[]
-      ) {
-        childOriginalProps['onMouseMove']?.(event, ...args);
+      childNewProps.onMouseMove = function (event: React.MouseEvent) {
+        childOriginalProps['onMouseMove']?.(event);
         setMousePos([event.clientX, event.clientY]);
       };
     }
@@ -116,14 +119,30 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
   if (hoverHide) {
     // handle popup mouseleave event
     console.log('hover hide');
-    childNewProps.onMouseLeave = function (
-      event: React.MouseEvent,
-      ...args: any[]
-    ) {
+    childNewProps.onMouseLeave = function (event: React.MouseEvent) {
       mergedVisibleChange(false);
       // if exist
-      childOriginalProps['onMouseLeave']?.(event, ...args);
+      childOriginalProps['onMouseLeave']?.(event);
     };
+    onPopupLeave = () => {
+      mergedVisibleChange(false);
+    };
+  }
+
+  if (clickShow) {
+    childNewProps.onClick = function (event: React.MouseEvent) {
+      mergedVisibleChange(true);
+      setMousePos([event.clientX, event.clientY]);
+      // if exist
+      childOriginalProps['onClick']?.(event);
+    };
+
+    onPopupEnter = () => {
+      mergedVisibleChange(true);
+    };
+  }
+
+  if (clickHide) {
     onPopupLeave = () => {
       mergedVisibleChange(false);
     };
@@ -150,7 +169,8 @@ const Trigger: React.FunctionComponent<TriggerProps> = (props) => {
       setTriggerRef={setTriggerRef}
       setPopupRef={setPopupRef}
       getPopupContainer={getPopupContainer}
-      offsetInfo={offsetInfo}
+      offsetInfo={offsetInfo || []}
+      color={color}
     />
   );
 };

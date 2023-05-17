@@ -13,7 +13,9 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
     onPopupLeave,
     setTriggerRef,
     setPopupRef,
-    offsetInfo
+    offsetInfo,
+    color,
+    getPopupContainer = () => document.body
   } = props;
 
   const titleContent = typeof title === 'function' ? title() : title;
@@ -48,12 +50,16 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
                 style={{
                   position: 'absolute',
                   left: offsetX,
-                  top: offsetY
+                  top: offsetY,
+                  backgroundColor: color,
+                  color: '#ddd',
+                  padding: '6px 8px',
+                  borderRadius: '4px'
                 }}
               >
                 {titleContent}
               </div>,
-              document.body
+              getPopupContainer()
             )
           : null}
       </div>

@@ -6,14 +6,29 @@ export interface TriggerProps {
   defaultOpen?: boolean;
   trigger?: TriggerMode;
   onOpenChange?: (open: boolean) => void;
-  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   destroyTooltipOnHide?: boolean;
   mouseInComponent?: boolean;
   children: ReactNode;
+  color: string;
+  placement?: PopupPlace;
 }
 
 export type TriggerMode = 'hover' | 'click';
 
+export type PopupPlace =
+  | 'top'
+  | 'right'
+  | 'bottom'
+  | 'left'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'rightTop'
+  | 'rightBottom';
 export interface PopupProps {
   open?: boolean;
   title?: ReactNode | (() => ReactNode);
@@ -22,6 +37,7 @@ export interface PopupProps {
   onPopupLeave: MouseEventHandler<HTMLDivElement>;
   setTriggerRef: (node: HTMLElement) => void;
   setPopupRef: (node: HTMLDivElement) => void;
-  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   offsetInfo: number[];
+  color: string;
 }

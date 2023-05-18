@@ -18,7 +18,7 @@ const App = () => {
         <Trigger
           title="hello world!!!hello world!!!hello world!!!hello world!!!"
           color="#108ee9"
-          placement={'bottom'}
+          placement={'bottomLeft'}
           onOpenChange={visibleChange}
         >
           <button onClick={onButtonClick}>TRIGGER BUTTON</button>

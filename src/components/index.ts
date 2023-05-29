@@ -1,3 +1,3 @@
 export { default as Trigger } from './Trigger/Trigger';
 
-export { Modal } from './Modal/Modal';
+export { default as Modal } from './Modal/Modal';

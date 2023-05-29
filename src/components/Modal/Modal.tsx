@@ -14,16 +14,16 @@ import { ButtonSize } from './Button/Button';
 import { createPortal, unmountComponentAtNode } from 'react-dom';
 
 interface ModalProps {
-  children: ReactNode;
+  children?: ReactNode;
   afterClose: Function;
   open: boolean;
   mask?: boolean;
   maskClosable?: boolean;
   maskStyle?: CSSProperties;
-  afterOpenChange: (open: boolean) => void;
+  afterOpenChange?: (open: boolean) => void;
   style?: CSSProperties;
   width?: string | number;
-  title: ReactNode;
+  title?: ReactNode;
   zIndex?: number;
   closable?: boolean;
   wrapClassName?: string;
@@ -31,16 +31,17 @@ interface ModalProps {
   okType?: ButtonSize;
   onOk: MouseEventHandler;
   onCancel: MouseEventHandler;
-  okButtonProps: CSSProperties;
-  cancelButtonProps: CSSProperties;
+  okButtonProps?: CSSProperties;
+  cancelButtonProps?: CSSProperties;
   cancelText?: ReactNode;
-  bodyStyle: CSSProperties;
+  bodyStyle?: CSSProperties;
   centered?: boolean;
   closeIcon?: ReactNode;
   footer?: ReactNode;
   getContainer?: HTMLElement | (() => HTMLElement) | false;
   destroyOnClose?: boolean;
   forceRender?: boolean;
+  className?: string;
 
   confirmLoading?: boolean;
   focusTriggerAfterClose?: boolean;
@@ -50,6 +51,7 @@ interface ModalProps {
 
 interface ModalMethodsConfig {
   afterClose: Function;
+  autoFocusButton: null | 'ok' | 'cancel';
   className: string;
   content: ReactNode;
   icon: ReactNode;
@@ -89,8 +91,10 @@ interface ModalAttributes {
   destroyAll: () => void;
 }
 
+type ModalType = 'success' | 'info' | 'warning' | 'error';
+
 const prefixCls = 'modal-container';
-export const Modal: React.FC<ModalProps> = (props) => {
+const Modal: React.FC<ModalProps> = (props) => {
   const {
     children,
     afterClose,
@@ -98,7 +102,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
     mask = true,
     maskClosable = true,
     maskStyle = {},
-    afterOpenChange,
+    afterOpenChange = () => {},
     style,
     width,
     title,
@@ -107,29 +111,31 @@ export const Modal: React.FC<ModalProps> = (props) => {
     wrapClassName,
     onOk,
     okText,
-    okButtonProps,
+    okButtonProps = {},
     okType,
     onCancel,
     cancelText,
-    cancelButtonProps,
-    bodyStyle,
+    cancelButtonProps = {},
+    bodyStyle = {},
     centered = false,
     closeIcon,
     footer,
     getContainer,
     destroyOnClose = false,
-    forceRender
+    forceRender,
+    className
   } = props;
 
   const [modalVisible, setModalVisible] = useState(open || false);
   const modalRef = useRef(modalVisible);
 
-  const modalContainerRef = useRef<HTMLDivElement>(null)
+  const modalContainerRef = useRef<HTMLDivElement>(null);
 
   const setModalClose = () => {
     setModalVisible(false);
     modalRef.current = false;
-    destroyOnClose && unmountComponentAtNode(modalContainerRef.current as HTMLDivElement)
+    destroyOnClose &&
+      unmountComponentAtNode(modalContainerRef.current as HTMLDivElement);
   };
 
   useEffect(() => {
@@ -141,18 +147,18 @@ export const Modal: React.FC<ModalProps> = (props) => {
   }, [modalVisible]);
 
   useEffect(() => {
-    if(forceRender) {
-      setModalVisible(() => true)
+    if (forceRender) {
+      setModalVisible(() => true);
     }
-  }, [])
+  }, []);
 
-  const modalCls = classnames(prefixCls, wrapClassName, {
+  const modalCls = classnames(prefixCls, {
     [`modal-center`]: centered
   });
 
-  const modalBodyCls = classnames('modal-info');
+  const modalBodyCls = classnames('modal-info', className);
 
-  const modalWrapperCls = classnames('modal-wrapper');
+  const modalWrapperCls = classnames('modal-wrapper', wrapClassName);
 
   const onOkClick = (e: React.MouseEvent) => {
     setModalClose();
@@ -164,14 +170,15 @@ export const Modal: React.FC<ModalProps> = (props) => {
     onCancel(e);
   };
 
-  const containerResult = typeof getContainer === 'function' ? getContainer() : (getContainer || document.body)
+  const containerResult =
+    typeof getContainer === 'function'
+      ? getContainer()
+      : getContainer || document.body;
 
   return (
-    modalVisible &&  createPortal(
-      <div 
-        className={modalWrapperCls}
-        ref={modalContainerRef}
-      >
+    modalVisible &&
+    createPortal(
+      <div className={modalWrapperCls} ref={modalContainerRef}>
         <Mask
           mask={mask}
           maskClosable={maskClosable}
@@ -184,7 +191,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             width: `${width}${typeof width === 'number' ? 'px' : ''}`,
             zIndex,
             ...style,
-            top: centered ? '' : (style?.top || '100px'),
+            top: centered ? '' : style?.top || '100px'
           }}
         >
           {closable &&
@@ -198,66 +205,86 @@ export const Modal: React.FC<ModalProps> = (props) => {
               </div>
             ))}
           <div className={modalBodyCls} style={bodyStyle}>
-            <div className="modal-title">{title}</div>
+            {title && <div className="modal-title">{title}</div>}
             <div className="modal-content">{children}</div>
             <div className="modal-btns">
-              {
-                footer && Array.isArray(footer)
-                ? (
-                  footer.map((button:ReactNode) => (
-                    button
-                  ))
-                )
-                : footer != null ? (
-                  <>
-                    <OKButton
-                      onOk={onOkClick}
-                      okButtonProps={okButtonProps}
-                      okText={okText}
-                      okType={okType}
-                    />
-                    <CancelButton
-                      onCancel={onCancelClick}
-                      cancelButtonProps={cancelButtonProps}
-                      cancelText={cancelText}
-                      cancelType={'primary'}
-                    />
-                  </> 
-                )
-                : null
-              }
+              {footer && Array.isArray(footer) ? (
+                footer.map((button: ReactNode) => button)
+              ) : footer != null ? (
+                <>
+                  <OKButton
+                    onOk={onOkClick}
+                    okButtonProps={okButtonProps}
+                    okText={okText}
+                    okType={okType}
+                  />
+                  <CancelButton
+                    onCancel={onCancelClick}
+                    cancelButtonProps={cancelButtonProps}
+                    cancelText={cancelText}
+                    cancelType={'primary'}
+                  />
+                </>
+              ) : null}
             </div>
           </div>
         </div>
-      </div>
-    , containerResult)
+      </div>,
+      containerResult
+    )
   );
 };
 
-
 Modal.defaultProps = {
   mask: true,
-  cancelText: "取消",
+  cancelText: '取消',
   centered: false,
   closable: true,
   // closeIcon: <CloseOutLined />,
   confirmLoading: false,
   destroyOnClose: false,
   focusTriggerAfterClose: true,
-  footer: "footer",
+  footer: 'footer',
   forceRender: false,
   getContainer: document.body,
   keyboard: true,
   maskStyle: {},
   // modalRender
   okButtonProps: {},
-  okText: "确定",
-  okType: "primary",
+  okText: '确定',
+  okType: 'primary',
   style: {},
-  title: "Modal title",
+  title: 'Modal title',
   width: 520,
-  wrapClassName: "",
+  wrapClassName: '',
   zIndex: 1000,
   onOk: () => {},
   afterOpenChange: () => {}
+};
+
+export default Modal;
+
+export const ModalSuccess = (props: Partial<ModalMethodsConfig>) => {
+  const {
+    autoFocusButton,
+    afterClose = () => {},
+    onOk = () => {},
+    onCancel = () => {},
+    content,
+    ...restProps
+  } = props;
+  return (
+    <Modal
+      open
+      afterClose={afterClose}
+      footer={[
+        <OKButton onOk={() => {}} okText={'知道了'} okButtonProps={{}} />
+      ]}
+      onCancel={onCancel}
+      onOk={onOk}
+      {...restProps}
+    >
+      {content}
+    </Modal>
+  );
 };

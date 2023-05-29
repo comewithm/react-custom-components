@@ -33,30 +33,33 @@ const App = () => {
         </Trigger>
         <Modal
           open={true}
-          mask={true}
-          maskClosable={true}
-          maskStyle={{
-            // border: "1px cyan solid",
-            boxSizing: 'border-box'
-          }}
+          // mask={true}
+          // maskClosable={true}
+          // maskStyle={{
+          //   border: "1px cyan solid",
+          //   boxSizing: 'border-box'
+          // }}
           afterClose={afterClose}
           afterOpenChange={afterOpenChange}
-          style={{
-            top: '40px'
-          }}
-          width="600px"
+          // style={{
+          //   top: '40px'
+          // }}
+          // width="600px"
           title="use Hooks"
-          zIndex={10}
-          closable={true}
+          // zIndex={10}
+          // closable={true}
           onOk={() => {}}
           onCancel={() => {}}
-          okText={'confirm'}
-          okType={'primary'}
-          cancelText={'cancel'}
+          // okText={'confirm'}
+          // okType={'primary'}
+          // cancelText={'cancel'}
           okButtonProps={{}}
           cancelButtonProps={{}}
           bodyStyle={{}}
-          centered={true}
+          destroyOnClose={true}
+          forceRender={true}
+          // footer={null}
+          // centered={true}
         >
           <p>Some contents</p>
           <p>Some contents</p>

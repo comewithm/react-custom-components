@@ -6,8 +6,8 @@ const path = require('path')
 const baseConfig: Configuration = {
     entry: path.join(__dirname, "./src/index.tsx"),
     output: {
-        filename: "dist/js/[name].js",
-        path: path.join(__dirname, "./dist"),
+        filename: "js/[name].[contenthash].js",
+        path: path.join(__dirname, "dist"),
         clean: true,
         publicPath: '/'
     },

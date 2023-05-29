@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { Trigger } from './components';
+import { Trigger, Modal } from './components';
 
 import './style/variable.less';
 
@@ -10,6 +10,14 @@ const App = () => {
 
   const onButtonClick = () => {
     console.log('button clicked');
+  };
+
+  const afterClose = () => {
+    console.log('close modal');
+  };
+
+  const afterOpenChange = (visible: boolean) => {
+    console.log('visible:', visible);
   };
 
   return (
@@ -23,9 +31,38 @@ const App = () => {
         >
           <button onClick={onButtonClick}>TRIGGER BUTTON</button>
         </Trigger>
-        {/* <Trigger title={'OTHER'}>
-          <button>ANOTHER TRIGGER</button>
-        </Trigger> */}
+        <Modal
+          open={true}
+          mask={true}
+          maskClosable={true}
+          maskStyle={{
+            // border: "1px cyan solid",
+            boxSizing: 'border-box'
+          }}
+          afterClose={afterClose}
+          afterOpenChange={afterOpenChange}
+          style={{
+            top: '40px'
+          }}
+          width="600px"
+          title="use Hooks"
+          zIndex={10}
+          closable={true}
+          onOk={() => {}}
+          onCancel={() => {}}
+          okText={'confirm'}
+          okType={'primary'}
+          cancelText={'cancel'}
+          okButtonProps={{}}
+          cancelButtonProps={{}}
+          bodyStyle={{}}
+          centered={true}
+        >
+          <p>Some contents</p>
+          <p>Some contents</p>
+          <p>Some contents</p>
+          <p>Some contents</p>
+        </Modal>
       </div>
     </>
   );

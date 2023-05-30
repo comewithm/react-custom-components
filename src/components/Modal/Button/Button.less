@@ -1,0 +1,24 @@
+@primary-background: #1677ff;
+@primary-color: #fff;
+
+.btn {
+    padding: 8px 14px;
+    margin: 2px 6px;
+    border-radius: 4px;
+    border-width: 0;
+    background-color: #1677ff;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: @primary-background;
+    color: @primary-color;
+}
+
+.btn-small {}
+
+.btn-large {}
+
+.btn-primary:hover {
+    background-color: fade(@primary-background, 90%);
+}

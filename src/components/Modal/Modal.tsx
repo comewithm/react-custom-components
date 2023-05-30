@@ -278,7 +278,7 @@ export const ModalSuccess = (props: Partial<ModalMethodsConfig>) => {
       open
       afterClose={afterClose}
       footer={[
-        <OKButton onOk={() => {}} okText={'知道了'} okButtonProps={{}} />
+        <OKButton onOk={() => {}} okText={'知道了'} />
       ]}
       onCancel={onCancel}
       onOk={onOk}

@@ -11,7 +11,7 @@ import { Mask } from './Mask/Mask';
 import { CancelButton, OKButton } from './Button/Button';
 import './Modal.less';
 import { ButtonSize } from './Button/Button';
-import { createPortal, unmountComponentAtNode } from 'react-dom';
+import { createPortal, unmountComponentAtNode, render } from 'react-dom';
 
 interface ModalProps {
   children?: ReactNode;
@@ -273,7 +273,8 @@ export const ModalSuccess = (props: Partial<ModalMethodsConfig>) => {
     content,
     ...restProps
   } = props;
-  return (
+
+  const component = (restProps: Partial<ModalMethodsConfig>) => (
     <Modal
       open
       afterClose={afterClose}
@@ -287,4 +288,11 @@ export const ModalSuccess = (props: Partial<ModalMethodsConfig>) => {
       {content}
     </Modal>
   );
+
+  render(component(restProps), document.body)
+
+
+  return {
+
+  }
 };
